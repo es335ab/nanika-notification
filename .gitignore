@@ -1,4 +1,8 @@
-.sass-cache
+.
+..
+sass-cache
 .DS_Store
 build
 node_modules
+assets/bower_components
+access_logs.db
