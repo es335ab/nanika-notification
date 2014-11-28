@@ -10,7 +10,8 @@
     "node_modules",
     "bower_components"
   ],
-  "devDependencies": {
-    "jquery": "~1.11.1"
+  "dependencies": {
+    "jquery": "1.11.1",
+    "backbone.marionette": "2.2.2"
   }
 }

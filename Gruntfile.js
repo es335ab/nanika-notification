@@ -7,27 +7,31 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
 
-  var mockConfig = {
-      app: 'assets',  //作業ディレクトリ
-      dist: 'build'   //ビルド後ディレクトリ
-  };
+  var path = {
+    assets: 'assets',
+    tmp: '.tmp',
+    build: 'build'
+  }
 
   grunt.initConfig({
-    mock: mockConfig,
+    path: path,
 
-    watch: {
-      options: {
-        nospawn: true
-      },
-      livereload: {
-        options: {
-          livereload: '<%= connect.options.livereload %>'
-        },
+    copy: {
+      tmp: {
         files: [
-          '<%= mock.app %>/*.html'
+          {
+            expand: true,
+            cwd: '<%= path.assets %>',
+            src: [
+              '**/*.!(scss|js|md)',
+              '!img/sprites/**'
+            ],
+            dest: '<%= path.tmp %>'
+          }
         ]
       }
     },
+
     connect: {
       options: {
         port: 9000,
@@ -40,7 +44,7 @@ module.exports = function(grunt) {
           middleware: function (connect) {
             return [
               proxySnippet,
-              mountFolder(connect, mockConfig.app)
+              mountFolder(connect, path.tmp)
             ];
           }
         }
@@ -56,35 +60,84 @@ module.exports = function(grunt) {
 
     concat: {
       dist: {
-        src: 'src/js/*.js',
-        dest: 'build/js/common.js'
+        src: ['<%= path.assets %>/js/**/*.js', '<%= path.assets %>/!bower_components/**/*'],
+        dest: '<%= path.tmp %>/js/common.js'
       }
     },
+
     uglify: {
       dist: {
-        src: 'build/js/common.js',
-        dest: 'build/js/common.min.js'
+        src: '<%= path.tmp %>/js/common.js',
+        dest: '<%= path.build %>/js/common.js'
       }
     },
+
     compass: {
       dist: {
         options: {
-          sassDir: 'src/scss',
-          cssDir: 'build/css',
-          environment: 'production'
+          sassDir: '<%= path.assets %>/scss',
+          cssDir: '<%= path.tmp %>/css',
+          environment: 'development'
         }
       }
     },
 
+    browserify: {
+      options: {
+        transform: ['debowerify', 'templateify'],
+        watch: true
+      },
+      common: {
+        options: {
+          require: ['backbone', 'backbone.marionette', 'jquery', 'underscore']
+        },
+        files: {
+          '<%= path.tmp %>/js/common.js': '<%= path.assets %>/js/common.js'
+        }
+      },
+      pages: {
+        options: {
+          external: ['backbone', 'backbone.marionette', 'jquery', 'underscore']
+        },
+        expand: true,
+        cwd: '<%= path.assets %>',
+        src: '!js/common.js',
+        dest: '<%= path.tmp %>'
+      }
+    },
+
     clean: {
-      server: '.tmp',
+      tmp: '.tmp',
+    },
+
+    watch: {
+      options: {
+        nospawn: true
+      },
+      livereload: {
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        },
+        files: ['<%= path.assets %>/*.html'],
+        css: {
+          files: ['<%= path.assets %>/**/*.scss'],
+          tasks: ['compass']
+        },
+        js: {
+          files: ['<%= path.assets %>/**/*.js'],
+          tasks: []
+        }
+      }
     }
 
   });
 
   grunt.registerTask('server', function(target) {
     grunt.task.run([
-      'clean:server',
+      'clean:tmp',
+      'copy:tmp',
+      'browserify',
+      'compass',
       'configureProxies',
       'connect:livereload',
       'watch'
