@@ -1,5 +1,5 @@
-var Nanika = require('./models/Nanika');
-var NanikaView = require('./views/NanikaView');
+var Nanika = require('./nanika/models/Nanika');
+var NanikaView = require('./nanika/views/NanikaView');
 
 var nanika = new Nanika();
 var nanikaView = new NanikaView();
