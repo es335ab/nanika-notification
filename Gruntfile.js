@@ -84,7 +84,7 @@ module.exports = function(grunt) {
 
     browserify: {
       options: {
-        transform: ['debowerify', 'templateify'],
+        transform: ['browserify-shim', 'jstify'],
         watch: true
       },
       common: {
@@ -100,9 +100,9 @@ module.exports = function(grunt) {
           external: ['backbone', 'backbone.marionette', 'jquery', 'underscore']
         },
         expand: true,
-        cwd: '<%= path.assets %>',
-        src: '!js/common.js',
-        dest: '<%= path.tmp %>'
+        cwd: '<%= path.assets %>/js',
+        src: ['*.js', '!common.js'],
+        dest: '<%= path.tmp %>/js'
       }
     },
 
@@ -125,7 +125,13 @@ module.exports = function(grunt) {
         },
         js: {
           files: ['<%= path.assets %>/**/*.js'],
-          tasks: []
+          tasks: ['browserify']
+        },
+        build: {
+          options: {
+            livereload: '<%= connect.options.livereload %>'
+          },
+          files: ['<%= path.tmp %>/**']
         }
       }
     }

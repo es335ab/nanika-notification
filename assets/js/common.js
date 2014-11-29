@@ -1,3 +1,1 @@
-require('backbone')
-
-console.log("hoge");
+require('backbone').$ = require('jquery');
