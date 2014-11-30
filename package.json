@@ -18,7 +18,13 @@
     "browserify": "^4.1.5",
     "grunt-browserify": "^2.1.0",
     "browserify-shim": "~3.7.0",
-    "jstify": "~0.4.0"
+    "jstify": "~0.4.0",
+    "uglify-save-license": "~0.4.0",
+    "grunt-newer": "~0.7.0",
+    "grunt-spritesmith": "~2.1.0",
+    "grunt-mocha-test": "~0.11.0",
+    "power-assert": "~0.9.0",
+    "sinon": "~1.10.0"
   },
   "engines": {
     "node": ">=0.8.0"
