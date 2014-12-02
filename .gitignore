@@ -8,3 +8,4 @@ bower_components
 access_logs.db
 .sass-cache
 .tmp
+assets/scss/var/_sprite.scss

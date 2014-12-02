@@ -83,6 +83,18 @@ module.exports = function(grunt) {
       }
     },
 
+    sprite: {
+      create: {
+        src: '<%= path.assets %>/img/sprites/*.png',
+        destImg: '<%= path.tmp %>/img/sprite.png',
+        destCSS: '<%= path.assets %>/scss/var/_sprite.scss',
+        imgPath: '../img/sprite.png',
+        algorithm: 'binary-tree',
+        engine: 'pngsmith',
+        padding: 8
+      }
+    },
+
     browserify: {
       options: {
         transform: ['browserify-shim', 'jstify'],
@@ -122,22 +134,24 @@ module.exports = function(grunt) {
 
     watch: {
       options: {
-        spawn: false
-      },
-      options: {
+        spawn: false,
         livereload: '<%= connect.options.livereload %>'
       },
       html: {
         files: ['<%= path.assets %>/**/*.html'],
         tasks: ['newer:copy:tmp']
       },
+      js: {
+        files: ['<%= path.assets %>/**/*.js'],
+        tasks: ['browserify']
+      },
       css: {
         files: ['<%= path.assets %>/scss/**'],
         tasks: ['compass']
       },
-      js: {
-        files: ['<%= path.assets %>/**/*.js'],
-        tasks: ['browserify']
+      sprite: {
+        files: ['<%= path.assets %>/img/sprites/*.png'],
+        tasks: ['sprite']
       },
       build: {
         options: {
@@ -152,22 +166,15 @@ module.exports = function(grunt) {
   grunt.registerTask('server', function(target) {
     grunt.task.run([
       'clean:tmp',
-      'copy:tmp',
       'browserify',
+      'sprite',
       'compass',
+      'copy:tmp',
       'configureProxies',
       'connect:livereload',
       'watch'
     ])
   });
 
-  /*
-  grunt.loadNpmTasks('grunt-contrib-compass');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-clean');
-
-  grunt.registerTask('default', [ 'concat', 'uglify', 'compass']);
-  */
 };
 
