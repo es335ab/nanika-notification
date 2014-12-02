@@ -122,27 +122,28 @@ module.exports = function(grunt) {
 
     watch: {
       options: {
-        nospawn: true
+        spawn: false
       },
-      livereload: {
+      options: {
+        livereload: '<%= connect.options.livereload %>'
+      },
+      html: {
+        files: ['<%= path.assets %>/**/*.html'],
+        tasks: ['newer:copy:tmp']
+      },
+      css: {
+        files: ['<%= path.assets %>/scss/**'],
+        tasks: ['compass']
+      },
+      js: {
+        files: ['<%= path.assets %>/**/*.js'],
+        tasks: ['browserify']
+      },
+      build: {
         options: {
           livereload: '<%= connect.options.livereload %>'
         },
-        files: ['<%= path.assets %>/*.html'],
-        css: {
-          files: ['<%= path.assets %>/**/*.scss'],
-          tasks: ['compass']
-        },
-        js: {
-          files: ['<%= path.assets %>/**/*.js'],
-          tasks: ['browserify']
-        },
-        build: {
-          options: {
-            livereload: '<%= connect.options.livereload %>'
-          },
-          files: ['<%= path.tmp %>/**']
-        }
+        files: ['<%= path.tmp %>/**']
       }
     }
 
