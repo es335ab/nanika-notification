@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>mock</title>
+</head>
+<body>
+<h1 id="testId">Mock loading...</h1>
+		<header class="lyMyPageHeader">
+			<div class="lyInner">
+				<h1 class="siteTtl"><img src="/img/common/logo2x.png" width="148" height="38" alt="ギャザリー"></h1>
+			</div>
+		</header>
+		<main class="lyMyPageMain is-welcome">
+			<p class="welcomeText">ギャザリーへのご登録ありがとうございます！
+				<br>ご利用の前に、プロフィールの設定をお願いいたします。</p>
+			<section class="lySectionLv2 is-userId" id="js-setIdSection">
+				<div class="inputTitleWrap">
+					<h2 class="titleText">ユーザーID</h2>
+					<span class="label is-must">必須</span>
+					<span class="limitText">※ユーザーIDは、登録後の変更ができません。</span>
+					<span id="welcomeUserIdInputResult" class="inputLimitSize">20文字まで</span>
+				</div>
+				<p class="inputText is-must">
+					<input id="welcomeUserIdInput" type="text" placeholder="ユーザーIDを入力　例）abcd1234" value="" maxlength="20">
+				</p>
+				<ul class="clauseList">
+					<li>半角英数字と「_（アンダースコア）」「-（ハイフン）」「~（チルダ）」「．（ピリオド）」の　4つの記号が使えます。</li>
+				</ul>
+				<ul class="supplementText">
+					<li>※ユーザーIDは公開されます。電話番号・メールアドレスなどの個人情報は使用しないでください。</li>
+					<li>※既に登録されているユーザーIDは使用できません。</li>
+				</ul>
+				<div id="welcomeInfoBox" class="infoBox hide">
+					<ul class="infoBoxList">
+						<li class="infoBoxListItem">
+							<p class="title">あなたのユーザーID</p>
+							<p class="idText js-idText"></p>
+						</li>
+						<li class="infoBoxListItem">
+							<p class="title">あなたのプロフィールURL</p>
+							<p>http://gathery.recruit-lifestyle.co.jp/curator/<span class="idText urlText js-idText"></span>
+							</p>
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section class="lySectionLv2 is-userName">
+				<div class="inputTitleWrap">
+					<h2 class="titleText">ユーザー名</h2>
+					<span class="label is-must">必須</span>
+					<span id="welcomeUserNameInputResult" class="inputLimitSize">16文字まで</span>
+				</div>
+				<p class="inputText is-must">
+					<input id="welcomeUserNameInput" type="text" placeholder="ユーザー名を入力　例）あいうえお1234" value="" maxlength="16">
+				</p>
+			</section>
+			<section class="lySectionLv2 is-otherSetting">
+				<h2 class="titleText accordionTrigger js-accordionTrigger">
+      <i class="icon is-settingInit"></i>その他の設定
+    </h2>
+				<div class="js-accordionTarget accordionTarget">
+					<div class="lySettingDetailProfile">
+						<div class="lyImage">
+							<i class="dummyImg"></i>
+							<p class="titleText">プロフィール画像</p>
+							<label class="inputUpImage">
+								<span class="btn">画像をアップロード</span>
+								<input type="file" class="hide">
+							</label>
+							<p class="supplementText">1024KBまでのJPEG/PNG/GIF</p>
+						</div>
+						<div class="lyDescription">
+							<section class="lySectionLv2">
+								<div class="inputTitleWrap">
+									<h2 class="titleText">自己紹介文</h2>
+									<span id="welcomeUserDescriptionResult" class="inputLimitSize">150文字まで</span>
+								</div>
+								<div class="textarea">
+									<textarea id="welcomeUserDescriptionInput" placeholder="自己紹介文を入力" value=""></textarea>
+								</div>
+							</section>
+							<section class="lySectionLv2 mB0">
+								<div class="inputTitleWrap">
+									<h2 class="titleText">運営サイト</h2>
+								</div>
+								<p class="inputText">
+									<input type="text" placeholder="facebook, twitter, ご自分のホームページなどのURLを入力" value="">
+								</p>
+							</section>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+<script src="/js/common.js"></script>
+<script src="/js/registration.js"></script>
+
+</body>
+</html>

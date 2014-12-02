@@ -10,7 +10,8 @@ module.exports = function(grunt) {
   var path = {
     assets: 'assets',
     tmp: '.tmp',
-    build: 'build'
+    build: 'build',
+    spec: 'spec'
   }
 
   grunt.initConfig({
@@ -103,6 +104,15 @@ module.exports = function(grunt) {
         cwd: '<%= path.assets %>/js',
         src: ['*.js', '!common.js'],
         dest: '<%= path.tmp %>/js'
+      }
+    },
+
+    unitTest: {
+      test: {
+        options: {
+          require: ['intelli-espower-loader']
+        },
+        src: '<%= path.spec %>/**/*Spec.js'
       }
     },
 
