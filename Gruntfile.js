@@ -59,13 +59,6 @@ module.exports = function(grunt) {
       }],
     },
 
-    concat: {
-      dist: {
-        src: ['<%= path.assets %>/js/**/*.js', '<%= path.assets %>/!bower_components/**/*'],
-        dest: '<%= path.tmp %>/js/common.js'
-      }
-    },
-
     uglify: {
       dist: {
         src: '<%= path.tmp %>/js/common.js',
@@ -119,13 +112,22 @@ module.exports = function(grunt) {
       }
     },
 
-    unitTest: {
+    mochaTest: {
       test: {
         options: {
-          require: ['intelli-espower-loader']
+          require: ['jquery']
         },
         src: '<%= path.spec %>/**/*Spec.js'
       }
+    },
+
+    jshint: {
+      options: {
+        jshintrc: '.jshintrc'
+      },
+      src: [
+        '<%= path.assets %>/js/**/*.js'
+      ]
     },
 
     clean: {

@@ -22,12 +22,14 @@ function CountInputString(args){
   };
 
   this.init();
-};
+}
 
 var proto = CountInputString.prototype;
 
 proto.init = function () {
-  this.setLimitedStringStatus();
+  var inputVal = this.getInputVal(this.$inputTargetId.val());
+
+  this.setLimitedStringStatus(inputVal);
   this.eventInit();
 };
 
@@ -37,7 +39,10 @@ proto.eventInit = function () {
   this.$inputTargetId.keydown(function () {
     var inputVal = that.getInputVal(that.$inputTargetId.val());
 
-    that.setLimitedStringStatus();
+    if(that.setLimitedStringStatus(inputVal)){
+      that.$limitedStringId.html(that.setLimitedStringStatus(inputVal));
+    }
+
     if(that.callBackInputString){
       that.callBackInputString(inputVal);
     }
@@ -46,7 +51,7 @@ proto.eventInit = function () {
   this.$inputTargetId.keyup(function () {
     var inputVal = that.getInputVal(that.$inputTargetId.val());
 
-    that.setLimitedStringStatus();
+    that.setLimitedStringStatus(that.$inputTargetId.val());
     if(that.callBackInputString){
       that.callBackInputString(inputVal);
     }
@@ -54,32 +59,30 @@ proto.eventInit = function () {
 
 };
 
-proto.setLimitedStringStatus = function () {
-  var inputVal = this.getInputVal(this.$inputTargetId.val());
+//todo:unit-test
+proto.setLimitedStringStatus = function (val) {
+  var inputVal = this.getInputVal(val);
 
   if(!inputVal){
     this.$limitedStringId.html( this.limitedStringSize + this.STATUS_STRINGS[1] );
 
-    return;
+    return false;
   }
 
-  var remainingLength = this.limitedStringSize - inputVal.length;
+  var remainingSize = this.limitedStringSize - inputVal.length;
 
-  if(remainingLength < 0){
-    this.$limitedStringId.html(
-      this.STATUS_STRINGS[2] +
-      '<span class="limitText">' + remainingLength + '</span>' +
-      this.STATUS_STRINGS[3]
-    );
+  if(remainingSize < 0){
+    return this.STATUS_STRINGS[2] +
+           '<span class="limitText">' + remainingSize + '</span>' +
+           this.STATUS_STRINGS[3];
   }else{
-    this.$limitedStringId.html(
-      this.STATUS_STRINGS[2] +
-      remainingLength +
-      this.STATUS_STRINGS[3]
-    );
+    return this.STATUS_STRINGS[2] +
+           remainingSize +
+           this.STATUS_STRINGS[3];
   }
 };
 
+//todo:unit-test
 proto.getInputVal = function (beforeProcessingVal) {
   var afterProcessingVal = beforeProcessingVal.replace((new RegExp('\r\n','g')),'');
   afterProcessingVal = afterProcessingVal.replace((new RegExp('\n','g')),'');
